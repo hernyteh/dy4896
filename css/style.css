@@ -259,7 +259,10 @@ footer {
     font-size: 0.8rem;
     color: #888;
 }
-
+/* --- 手机端右上角专属容器 (电脑端默认隐藏) --- */
+.mobile-top-right {
+    display: none;
+}
 /* --- 响应式 --- */
 @media (max-width: 992px) {
     .nav-links { display: none; }
@@ -323,11 +326,13 @@ footer {
 .mobile-lang { display: none; }
 
 /* 当屏幕宽度小于 768px (手机/小平板) 时，执行以下 CSS */
+/* 当屏幕宽度小于 768px (手机/小平板) 时，执行以下 CSS */
 @media (max-width: 768px) {
-    /* 1. 导航栏变身滑动菜单 */
+    /* 1. 导航栏与按钮排版 */
+    .mobile-top-right { display: flex; align-items: center; gap: 15px; }
+    .nav-actions { display: none; } 
     .hamburger { display: flex; }
-    .nav-actions { display: none; } /* 手机端隐藏顶部右侧按钮，保持顶部干净 */
-    .mobile-lang { display: block; margin-top: 20px; }
+    
     .nav-links {
         position: fixed; top: 0; right: -100%; width: 65%; height: 100vh;
         background-color: var(--primary-bg); flex-direction: column;
@@ -336,27 +341,31 @@ footer {
     }
     .nav-links.active { right: 0; }
     
-    /* 汉堡按钮变成 X 的高级动画 */
+    /* 汉堡按钮变成 X */
     .hamburger.toggle span:nth-child(1) { transform: rotate(-45deg) translate(-5px, 6px); }
     .hamburger.toggle span:nth-child(2) { opacity: 0; }
     .hamburger.toggle span:nth-child(3) { transform: rotate(45deg) translate(-5px, -6px); }
 
-    /* 2. 主视觉区 (Hero) 字体与间距缩小 */
+    /* 2. 主视觉区 (Hero) 图片与字体优化 */
+    .hero { 
+        padding: 130px 5% 60px; 
+        min-height: 55vh; /* 高度调矮一点，避免图片被拉伸得太夸张 */
+        /* 重点：让图片定位在偏上方 (中心点靠上)，这样手机上就不会把你们的人头裁掉 */
+        background-position: center 20%; 
+    }
     .hero h1 { font-size: 2.2rem; }
     .hero p { font-size: 1rem; margin-bottom: 2rem;}
-    .hero { padding: 130px 5% 60px; min-height: 70vh; }
     .hero-btns { flex-direction: column; width: 100%; gap: 1rem;}
     .hero-btns .btn { width: 100%; }
     
-    /* 3. 核心业务区：左右排版强制改为上下堆叠 */
+    /* 3. 核心业务区与表单 */
     .section-title { font-size: 2rem; margin-bottom: 2rem; }
     .service-row, .service-row:nth-child(even) { flex-direction: column-reverse; text-align: center; gap: 30px; margin-bottom: 70px; }
     .service-visual { width: 100%; height: 250px; }
     .link-arrow { justify-content: center; width: 100%; }
     
-    /* 4. 报价单变为单列，方便拇指点击 */
     .quote-form-container { padding: 2rem 1.5rem; }
     .quote-form { grid-template-columns: 1fr; gap: 1rem;}
     .form-group.full-width { grid-column: span 1; }
-    .radio-group { flex-direction: column; gap: 8px; } /* 选择题上下排 */
+    .radio-group { flex-direction: column; gap: 8px; } 
 }

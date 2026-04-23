@@ -19,7 +19,6 @@ const translations = {
         trust_title: "Trusted by Loving Families Everyday",
         trust_desc: "Data-driven insights, professional objectivity, and a commitment to transparency form the core of my personalized advising in Puchong and surrounding Selangor.",
         
-        /* 表单英文翻译 */
         quote_title: "Get a quote in just a few clicks!",
         label_fullname: "Full Name",
         label_gender: "Select your gender",
@@ -33,7 +32,7 @@ const translations = {
         btn_get_quote: "GET MY QUOTE",
         
         footer_desc: "Objective, professional, and personalized insurance advice you can trust. Let's secure your future together in Malaysia.",
-        footer_copyright: "© 2026 InsureFit Consulting. All Rights Reserved."
+        footer_copyright: "© 2026 Dhayon. All Rights Reserved."
     },
     zh: {
         top_promo: "限时优惠：为您在马来西亚量身定制的全面人寿与保障计划。",
@@ -51,7 +50,6 @@ const translations = {
         trust_title: "值得每一位家人每日信赖",
         trust_desc: "基于数据分析的洞见、专业的客观态度，以及对透明度的承诺，构成了我在 Puchong 和 Selangor 的个性化咨询服务。",
         
-        /* 表单中文翻译 */
         quote_title: "简单几步，获取您的专属报价！",
         label_fullname: "您的全名",
         label_gender: "您的性别",
@@ -65,14 +63,13 @@ const translations = {
         btn_get_quote: "立即获取报价",
 
         footer_desc: "值得信赖的客观、专业且个性化的咨询。让我们一起保障您在马来西亚的未来。",
-        footer_copyright: "© 2026 您的品牌名咨询. 保留所有权利。"
+        footer_copyright: "© 2026 Dhayon. 保留所有权利。"
     }
 };
 
 function toggleLanguage() {
     currentLang = currentLang === 'en' ? 'zh' : 'en';
     
-    // 确保手机端和电脑端的两个语言切换按钮文字都会跟着变
     const langBtns = document.querySelectorAll('.lang-toggle');
     langBtns.forEach(btn => {
         btn.innerText = currentLang === 'en' ? '中 / EN' : 'EN / 中';
@@ -86,10 +83,8 @@ function toggleLanguage() {
     });
 }
 
-// --- 2. 页面加载完毕后的事件绑定 (把所有动作都放在这里面) ---
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- A. 滚动浮现效果 ---
     const revealElements = document.querySelectorAll('.reveal');
     const revealOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
 
@@ -104,7 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     revealElements.forEach(el => { revealOnScroll.observe(el); });
 
-    // --- B. 导航栏向下滚动时增加阴影效果 ---
     window.addEventListener('scroll', () => {
         const header = document.getElementById('main-header');
         if (window.scrollY > 50) {
@@ -114,18 +108,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- C. 移动端汉堡菜单动态逻辑 ---
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.querySelector('.nav-links');
 
     if (hamburger && navLinks) {
-        // 点击汉堡图标：滑出菜单 & 变成 X
         hamburger.addEventListener('click', () => {
             navLinks.classList.toggle('active');
             hamburger.classList.toggle('toggle');
         });
 
-        // 点击菜单里的链接后，自动把菜单收回去
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
@@ -134,14 +125,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- D. 提交表单直接跳 WhatsApp (包含中英文智能判断) ---
     const whatsappForm = document.getElementById('whatsappForm');
     
     if(whatsappForm) {
         whatsappForm.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            // 1. 抓取用户填写的所有数据
             const fullName = document.getElementById('fullName').value; 
             const gender = document.querySelector('input[name="gender"]:checked').value;
             const dob = document.getElementById('dob').value;
@@ -151,13 +140,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let whatsappMessage = "";
 
-            // 2. 判断当前语言，打包中英文 WhatsApp 讯息
             if (currentLang === 'zh') {
                 const genderZh = gender === 'Female' ? '女性' : '男性';
                 const smokerZh = smoker === 'Yes' ? '是' : '否';
                 const employedZh = employed === 'Yes' ? '是' : '否';
 
-                whatsappMessage += `你好，我想获取专属的保险规划评估。这是我的基本资料：\n\n`;
+                whatsappMessage += `你好，我是通过 dhayon.com 来的。我想获取专属的保险规划评估，这是我的基本资料：\n\n`;
                 whatsappMessage += `*姓名:* ${fullName}\n`;
                 whatsappMessage += `*性别:* ${genderZh}\n`;
                 whatsappMessage += `*出生日期:* ${dob}\n`;
@@ -166,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 whatsappMessage += `*年收入:* ${income}\n\n`;
                 whatsappMessage += `期待您的专业建议，谢谢！`;
             } else {
-                whatsappMessage += `Hi, I would like to get a personalized insurance quote. Here are my details:\n\n`;
+                whatsappMessage += `Hi, I am reaching out from dhayon.com. I would like to get a personalized insurance quote. Here are my details:\n\n`;
                 whatsappMessage += `*Name:* ${fullName}\n`;
                 whatsappMessage += `*Gender:* ${gender}\n`;
                 whatsappMessage += `*Date of Birth:* ${dob}\n`;
@@ -176,7 +164,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 whatsappMessage += `Looking forward to your professional advice. Thank you!`;
             }
 
-            // 3. 构建 WhatsApp API 链接
             // 【重要：记得在这里换成你的真实号码，例如 60123456789】
             const phoneNumber = "60162389836"; 
             
